@@ -155,13 +155,13 @@ public class ModRegistry {
     public static final Supplier<Item> ALTIMETER_ITEM = regItem(DEPTH_METER_NAME, () -> new AltimeterItem(new Item.Properties()));
     public static final Supplier<Item> SLICE_MAP = regItem(SLICE_MAP_NAME, () -> new EmptySliceMapItem(new Item.Properties()));
     //speedometer
+    //trim
+    public static final ResourceKey<TrimPattern> BLAST_TRIM = ResourceKey.create(Registries.TRIM_PATTERN, res("blast"));
     //   public static final Supplier<Item> SPEEDOMETER_ITEM = regItem(SPEEDOMETER_NAME,()-> new SpeedometerItem(new Item.Properties()));
     public static final Supplier<Item> BLAST_TRIM_TEMPLATE = regItem("blast_armor_trim_smithing_template",
             () -> SmithingTemplateItem.createArmorTrimTemplate(BLAST_TRIM));    public static final Supplier<BlockEntityType<LunchBoxBlockTile>> LUNCH_BASKET_TILE = regTile(
             LUNCH_BASKET_NAME, () -> PlatHelper.newBlockEntityType(
                     LunchBoxBlockTile::new, LUNCH_BASKET.get()));
-    //trim
-    public static final ResourceKey<TrimPattern> BLAST_TRIM = ResourceKey.create(Registries.TRIM_PATTERN, res("blast"));
     //blocks
     //flags
     public static final Map<DyeColor, Supplier<Block>> FLAGS = RegUtils.registerFlags(FLAG_NAME);
@@ -203,6 +203,11 @@ public class ModRegistry {
             FLAG_NAME, () -> PlatHelper.newBlockEntityType(
                     FlagBlockTile::new, FLAGS.values().stream().map(Supplier::get).toArray(Block[]::new)));
     //decoration blocks
+    //safe
+    public static final Supplier<Block> SAFE = regBlock(SAFE_NAME, () -> new SafeBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)
+                    .pushReaction(PushReaction.BLOCK)
+    ));
     public static final Supplier<Item> SAFE_ITEM = regItem(SAFE_NAME, () ->
             new SafeItem(SAFE.get(), new Item.Properties()
                     .stacksTo(1)
@@ -212,14 +217,17 @@ public class ModRegistry {
     public static final Supplier<Block> NOTICE_BOARD = regWithItem(NOTICE_BOARD_NAME, () -> new NoticeBoardBlock(
             BlockBehaviour.Properties.ofFullCopy(Blocks.BARREL)
                     .isRedstoneConductor(NEVER)));
-    public static final List<Supplier<Item>> SCONCES = new ArrayList<>(List.of(SCONCE_ITEM, SCONCE_ITEM_SOUL));    public static final Supplier<BlockEntityType<PresentBlockTile>> PRESENT_TILE = regTile(
-            PRESENT_NAME, () -> PlatHelper.newBlockEntityType(
-                    PresentBlockTile::new, PRESENTS.values().stream().map(Supplier::get).toArray(Block[]::new)));
     //magma cream block
     //public static final Supplier<Block> MAGMA_CREAM_BLOCK = regBlock(MAGMA_CREAM_BLOCK_NAME, () -> new MagmaCreamBlock(
     //        BlockBehaviour.Properties.ofFullCopy()(Blocks.SLIME_BLOCK)));
     //public static final Supplier<Item> MAGMA_CREAM_BLOCK_ITEM = regItem(MAGMA_CREAM_BLOCK_NAME, () -> new BlockItem(MAGMA_CREAM_BLOCK.get(),
     //        (new Item.Properties()).tab(getTab( MAGMA_CREAM_BLOCK_NAME))));
+    //netherite trapdoor
+    public static final Supplier<Block> NETHERITE_TRAPDOOR = regBlock(NETHERITE_TRAPDOOR_NAME, () -> new NetheriteTrapdoorBlock(
+            BlockBehaviour.Properties.ofFullCopy(NETHERITE_DOOR.get())
+                    .noOcclusion()
+                    .isValidSpawn((a, b, c, d) -> false)
+    ));
     public static final Supplier<Item> NETHERITE_TRAPDOOR_ITEM = regItem(NETHERITE_TRAPDOOR_NAME, () -> new BlockItem(
             NETHERITE_TRAPDOOR.get(), new Item.Properties()
             .fireResistant()));
@@ -238,11 +246,6 @@ public class ModRegistry {
         CompatHandler.initOptionalRegistries();
         RegUtils.initDynamicRegistry();
     }
-    //safe
-    public static final Supplier<Block> SAFE = regBlock(SAFE_NAME, () -> new SafeBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)
-                    .pushReaction(PushReaction.BLOCK)
-    ));
 
     private static boolean isDisabled(String name) {
         return !CommonConfigs.isEnabled(name);
@@ -347,6 +350,9 @@ public class ModRegistry {
     public static final Supplier<BlockEntityType<SackBlockTile>> SACK_TILE = regTile(
             SACK_NAME, () -> PlatHelper.newBlockEntityType(
                     SackBlockTile::new, SACK.get()));
+    public static final List<Supplier<Item>> SCONCES = new ArrayList<>(List.of(SCONCE_ITEM, SCONCE_ITEM_SOUL));    public static final Supplier<BlockEntityType<PresentBlockTile>> PRESENT_TILE = regTile(
+            PRESENT_NAME, () -> PlatHelper.newBlockEntityType(
+                    PresentBlockTile::new, PRESENTS.values().stream().map(Supplier::get).toArray(Block[]::new)));
 
     //green
     public static final Supplier<Block> SCONCE_GREEN = regBlock(SCONCE_NAME_GREEN, () -> new SconceBlock(
@@ -599,12 +605,6 @@ public class ModRegistry {
     public static final Supplier<Item> NETHERITE_DOOR_ITEM = regItem(NETHERITE_DOOR_NAME, () -> new BlockItem(
             NETHERITE_DOOR.get(), new Item.Properties()
             .fireResistant()));
-    //netherite trapdoor
-    public static final Supplier<Block> NETHERITE_TRAPDOOR = regBlock(NETHERITE_TRAPDOOR_NAME, () -> new NetheriteTrapdoorBlock(
-            BlockBehaviour.Properties.ofFullCopy(NETHERITE_DOOR.get())
-                    .noOcclusion()
-                    .isValidSpawn((a, b, c, d) -> false)
-    ));
     public static final Supplier<BlockEntityType<DoormatBlockTile>> DOORMAT_TILE = regTile(
             DOORMAT_NAME, () -> PlatHelper.newBlockEntityType(
                     DoormatBlockTile::new, DOORMAT.get()));
