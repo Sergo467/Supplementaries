@@ -33,8 +33,14 @@ jobs:
       - name: Build
         run: ./gradlew build --no-daemon
 
-      - name: Upload artifact
+      - name: Upload artifact (Fabric)
         uses: actions/upload-artifact@v4
         with:
-          name: mod-jar
-          path: build/libs/*.jar
+          name: fabric-jar
+          path: fabric/build/libs/*.jar
+
+      - name: Upload artifact (NeoForge)
+        uses: actions/upload-artifact@v4
+        with:
+          name: neoforge-jar
+          path: neoforge/build/libs/*.jar
