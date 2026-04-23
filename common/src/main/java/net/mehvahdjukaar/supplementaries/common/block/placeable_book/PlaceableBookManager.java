@@ -81,12 +81,14 @@ public class PlaceableBookManager {
 
     @Nullable
     public static BookType get(Item item, boolean horizontal, HolderLookup.Provider ra) {
+        BookType fallback = null;
         for (var entry : ITEMS_TO_BOOKS.get(ra).get(item)) {
             if (entry.isHorizontal() == horizontal || CommonConfigs.Tweaks.MIXED_BOOKS.get()) {
                 return entry;
             }
+            fallback = entry;
         }
-        return null;
+        return fallback;
     }
 
     public static void onDataSync(ServerPlayer player, boolean joined) {
