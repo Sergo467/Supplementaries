@@ -222,6 +222,11 @@ public class ModRegistry {
     //        BlockBehaviour.Properties.ofFullCopy()(Blocks.SLIME_BLOCK)));
     //public static final Supplier<Item> MAGMA_CREAM_BLOCK_ITEM = regItem(MAGMA_CREAM_BLOCK_NAME, () -> new BlockItem(MAGMA_CREAM_BLOCK.get(),
     //        (new Item.Properties()).tab(getTab( MAGMA_CREAM_BLOCK_NAME))));
+    //netherite doors
+    public static final Supplier<Block> NETHERITE_DOOR = regBlock(NETHERITE_DOOR_NAME, () -> new NetheriteDoorBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)
+                    .noOcclusion()
+    ));
     //netherite trapdoor
     public static final Supplier<Block> NETHERITE_TRAPDOOR = regBlock(NETHERITE_TRAPDOOR_NAME, () -> new NetheriteTrapdoorBlock(
             BlockBehaviour.Properties.ofFullCopy(NETHERITE_DOOR.get())
@@ -593,11 +598,6 @@ public class ModRegistry {
     public static final Supplier<Block> GOLD_TRAPDOOR = regWithItem(GOLD_TRAPDOOR_NAME, () -> new GoldTrapdoorBlock(
             BlockBehaviour.Properties.ofFullCopy(GOLD_DOOR.get())
                     .isValidSpawn((a, b, c, d) -> false)
-    ));
-    //netherite doors
-    public static final Supplier<Block> NETHERITE_DOOR = regBlock(NETHERITE_DOOR_NAME, () -> new NetheriteDoorBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)
-                    .noOcclusion()
     ));
     public static final Supplier<BlockEntityType<ItemShelfBlockTile>> ITEM_SHELF_TILE = regTile(
             ITEM_SHELF_NAME, () -> PlatHelper.newBlockEntityType(
